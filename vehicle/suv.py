@@ -1,4 +1,4 @@
-from ..vahical.car import Car
+from vehicle.car import Car
 
 class SUV(Car):
     def __init__(self, make, model, year, registration_number, seats, availability=True):

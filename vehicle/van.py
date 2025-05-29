@@ -1,4 +1,4 @@
-from vahical import Car
+from vehicle.car import Car
 
 class Van(Car):
     def __init__(self, make, model, year, registration_number, seats, has_sliding_doors, availability=True):

@@ -1,8 +1,8 @@
-from ..vahical.van import Van
-from ..vahical.truck import Truck
-from ..vahical.suv import SUV
-from ..vahical.sedarn import Sedan
-from ..vahical.sportsCar import SportsCar
+from vehicle.van import Van
+from vehicle.truck import Truck
+from vehicle.suv import SUV
+from vehicle.sedan import Sedan
+from vehicle.sportsCar import SportsCar
 
 def preload_vehicles(store):
     # Vans
