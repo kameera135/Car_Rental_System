@@ -43,7 +43,9 @@ def main():
         user = RegularCustomer(name, customer_id)
 
     while True:
+
         print_menu_regular()
+        #Only show for admin users
         if isinstance(user, Admin):
             print_menu_admin()
 
@@ -162,5 +164,6 @@ def main():
         else:
             print("Invalid option. Try again.")
 
+#Main method
 if __name__ == "__main__":
     main()

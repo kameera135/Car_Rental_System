@@ -31,7 +31,7 @@ def preload_vehicles(store):
     store.preload_vehicle(SportsCar("Ferrari", "F8", 2022, "REG-402", 2))
     store.preload_vehicle(SportsCar("Lamborghini", "Huracan", 2023, "REG-403", 2))
 
-
+#Customer preload
 def preload_customers(admin):
     customers = [
         RegularCustomer("Kasun", "C001"),

@@ -6,6 +6,7 @@ class Reservation:
         self.end_date = end_date
         self.active = True
 
+    #Cancel reseration
     def cancel(self):
         if self.active:
             self.vehicle.set_availability(True)
@@ -14,6 +15,7 @@ class Reservation:
         else:
             print("Reservation already inactive.")
 
+    #Display it
     def display(self):
         return (f"Reservation: {self.vehicle.display_info()} for "
                 f"{self.customer.name} from {self.start_date} to {self.end_date}")

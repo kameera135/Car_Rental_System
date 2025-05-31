@@ -16,6 +16,7 @@ class Payment:
         self.status = "Paid"
         print(f"Payment of ${self.invoice.total_amount:.2f} received via {self.payment_method}.")
 
+    #Display payment data discounts 
     def display(self):
         return (
             f"\tPayment ID: {self.payment_id}\n"

@@ -26,6 +26,7 @@ class Admin(Customer):
 
         report_lines = ["CUSTOMER REPORT\n=================\n"]
 
+        #Add line by line details
         for customer in self.customer_list:
             report_lines.append(f"Customer: {customer.name} (ID: {customer.customer_id})")
 
