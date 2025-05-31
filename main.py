@@ -19,6 +19,7 @@ def print_menu_admin():
     print("\n\tADMIN OPTIONS\n")
     print("6. Add Vehicle")
     print("7. Remove Vehicle")
+    print("8. Generate Report")
 
 
 def main():
