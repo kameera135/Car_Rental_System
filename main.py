@@ -1,7 +1,7 @@
 from store.rental import RentalStore
 from customer.admin import Admin
 from customer.regular_customer import RegularCustomer
-from utils.preload import preload_vehicles
+from utils.preload import preload_vehicles,preload_customers
 from transaction.reservation import Reservation
 from transaction.invoice import Invoice
 from transaction.payment import Payment
@@ -24,26 +24,21 @@ def print_menu_admin():
 
 def main():
     store = RentalStore()
+    admin_user = Admin("SystemAdmin", "A000", store)
     preload_vehicles(store)
+    customer_list = preload_customers(admin_user)
     today = datetime.date.today()
 
     print("\n\t----Welcome to CRMS----\n")
     user_type = input("Are you an Admin (A) or Regular Customer (R)? ").strip().lower()
 
     name = input("Enter your name: ")
-
-    while True:
-        try:
-            customer_id = int(input("Enter your ID: "))
-            break
-
-        except ValueError:
-            print("\tInvalid input. Please enter a numeric ID!!")
+    customer_id = input("Enter your ID: ")
 
     print(f"\nHello {name} Welcome!")
 
     if user_type == 'a':
-        user = Admin(name, customer_id, store)
+        user = admin_user
     else:
         user = RegularCustomer(name, customer_id)
 
@@ -58,7 +53,7 @@ def main():
             store.display_vehicles()
 
         elif choice == '2':
-            reg = input("Enter registration number of the vehicle to rent: ")
+            reg = input("Enter registration number of the vehicle to rent(REG-XXX): ")
             vehicle = store.find_vehicle(reg)
 
             if vehicle and vehicle.is_available():
@@ -78,12 +73,6 @@ def main():
 
                     user.rent_vehicle(vehicle)
                     reservation = Reservation(user, vehicle, start_date, end_date)
-                    '''invoice = Invoice(reservation, daily_rate=100.0)
-                    print(invoice.generate_invoice())
-
-                    method = input("\nEnter payment method (e.g., Cash or Credit Card): ")
-                    payment = Payment(invoice, method)
-                    payment.process_payment()'''
 
                     daily_rate = 100.0
                     invoice = Invoice(reservation, daily_rate=daily_rate)
@@ -118,7 +107,7 @@ def main():
                 except Exception as e:
                     print("Error processing reservation:", e)
             else:
-                print("Vehicle not found or unavailable.")
+                print("\tVehicle not found or unavailable.")
 
         elif choice == '3':
             reg = input("Enter registration number of the vehicle to return: ")
@@ -166,6 +155,9 @@ def main():
         elif choice == '7' and isinstance(user, Admin):
             reg = input("Enter registration number to remove: ")
             user.remove_vehicle_from_store(reg)
+
+        elif choice == '8' and isinstance(user, Admin):
+            user.generate_report()
 
         else:
             print("Invalid option. Try again.")

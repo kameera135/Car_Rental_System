@@ -3,6 +3,7 @@ from vehicle.truck import Truck
 from vehicle.suv import SUV
 from vehicle.sedan import Sedan
 from vehicle.sportsCar import SportsCar
+from customer.regular_customer import RegularCustomer
 
 def preload_vehicles(store):
     # Vans
@@ -29,3 +30,16 @@ def preload_vehicles(store):
     store.preload_vehicle(SportsCar("Porsche", "911", 2021, "REG-401", 2))
     store.preload_vehicle(SportsCar("Ferrari", "F8", 2022, "REG-402", 2))
     store.preload_vehicle(SportsCar("Lamborghini", "Huracan", 2023, "REG-403", 2))
+
+
+def preload_customers(admin):
+    customers = [
+        RegularCustomer("Kasun", "C001"),
+        RegularCustomer("Nimasha", "C002"),
+        RegularCustomer("Tharindu", "C003")
+    ]
+
+    for customer in customers:
+        admin.add_customer(customer)
+
+    return customers 

@@ -1,0 +1,14 @@
+CUSTOMER REPORT
+=================
+
+Customer: Kasun (ID: C001)
+No vehicles currently rented.
+Reward Points: 0
+
+Customer: Nimasha (ID: C002)
+No vehicles currently rented.
+Reward Points: 0
+
+Customer: Tharindu (ID: C003)
+No vehicles currently rented.
+Reward Points: 0
