@@ -8,7 +8,7 @@ from transaction.payment import Payment
 import datetime
 
 def print_menu_regular():
-    print("\nCAR RENTAL MANAGEMENT SYSTEM")
+    print("\n\tCAR RENTAL MANAGEMENT SYSTEM\n")
     print("1. View Available Vehicles")
     print("2. Rent a Vehicle")
     print("3. Return a Vehicle")
@@ -16,17 +16,7 @@ def print_menu_regular():
     print("5. Exit")
 
 def print_menu_admin():
-    print("\nCAR RENTAL MANAGEMENT SYSTEM")
-    print("1. View Available Vehicles")
-    print("2. Rent a Vehicle")
-    print("3. Return a Vehicle")
-    print("4. View Rented Vehicles")
-    print("5. Add Vehical To Store")
-    print("6. Remove Vehical From Store")
-    print("7. Exit")
-
-def print_admin_menu():
-    print("ADMIN OPTIONS")
+    print("\n\tADMIN OPTIONS\n")
     print("6. Add Vehicle")
     print("7. Remove Vehicle")
 
@@ -35,11 +25,20 @@ def main():
     store = RentalStore()
     preload_vehicles(store)
 
-    print("Welcome to CRMS")
+    print("\n\t----Welcome to CRMS----\n")
     user_type = input("Are you an Admin (A) or Regular Customer (R)? ").strip().lower()
 
     name = input("Enter your name: ")
-    customer_id = input("Enter your ID: ")
+
+    while True:
+        try:
+            customer_id = int(input("Enter your ID: "))
+            break
+
+        except ValueError:
+            print("\tInvalid input. Please enter a numeric ID!!")
+
+    print(f"\nHello {name} Welcome!")
 
     if user_type == 'a':
         user = Admin(name, customer_id, store)
@@ -47,12 +46,11 @@ def main():
         user = RegularCustomer(name, customer_id)
 
     while True:
-
         print_menu_regular()
         if isinstance(user, Admin):
-            print_admin_menu()
+            print_menu_admin()
 
-        choice = input("Enter your choice: ")
+        choice = input("\nEnter your choice: ")
 
         if choice == '1':
             store.display_vehicles()

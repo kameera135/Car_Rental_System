@@ -30,4 +30,4 @@ class RentalStore:
             print("\nAvailable Vehicles:")
             for v in self.vehicles:
                 status = "Available" if v.is_available() else "Rented"
-                print(f"{v.display_info()} - {status}")
+                print(f"\t{v.display_info()} - {status}")
