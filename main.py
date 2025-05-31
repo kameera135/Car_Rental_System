@@ -7,13 +7,29 @@ from transaction.invoice import Invoice
 from transaction.payment import Payment
 import datetime
 
-def print_menu():
+def print_menu_regular():
     print("\nCAR RENTAL MANAGEMENT SYSTEM")
     print("1. View Available Vehicles")
     print("2. Rent a Vehicle")
     print("3. Return a Vehicle")
     print("4. View Rented Vehicles")
     print("5. Exit")
+
+def print_menu_admin():
+    print("\nCAR RENTAL MANAGEMENT SYSTEM")
+    print("1. View Available Vehicles")
+    print("2. Rent a Vehicle")
+    print("3. Return a Vehicle")
+    print("4. View Rented Vehicles")
+    print("5. Add Vehical To Store")
+    print("6. Remove Vehical From Store")
+    print("7. Exit")
+
+def print_admin_menu():
+    print("ADMIN OPTIONS")
+    print("6. Add Vehicle")
+    print("7. Remove Vehicle")
+
 
 def main():
     store = RentalStore()
@@ -31,7 +47,11 @@ def main():
         user = RegularCustomer(name, customer_id)
 
     while True:
-        print_menu()
+
+        print_menu_regular()
+        if isinstance(user, Admin):
+            print_admin_menu()
+
         choice = input("Enter your choice: ")
 
         if choice == '1':
@@ -72,6 +92,42 @@ def main():
         elif choice == '5':
             print("Thank you for using CRMS!")
             break
+
+        elif choice == '6' and isinstance(user, Admin):
+            # Add Vehicle (admin only)
+            category = input("Enter vehicle type (van/truck/suv/sedan/sports): ").lower()
+            make = input("Brand: ")
+            model = input("Model: ")
+            year = int(input("Year: "))
+            reg = input("Registration Number: ")
+            seats = int(input("Number of Seats: "))
+
+            # import only here to avoid circular issues
+            if category == 'van':
+                from vehicle.van import Van
+                has_doors = input("Has sliding doors (yes/no)? ").lower() == 'yes'
+                vehicle = Van(make, model, year, reg, seats, has_doors)
+            elif category == 'truck':
+                from vehicle.truck import Truck
+                vehicle = Truck(make, model, year, reg, seats)
+            elif category == 'suv':
+                from vehicle.suv import SUV
+                vehicle = SUV(make, model, year, reg, seats)
+            elif category == 'sedan':
+                from vehicle.sedan import Sedan
+                vehicle = Sedan(make, model, year, reg, seats)
+            elif category == 'sports':
+                from vehicle.sportsCar import SportsCar
+                vehicle = SportsCar(make, model, year, reg, seats)
+            else:
+                print("Unknown vehicle type.")
+                continue
+
+            user.add_vehicle_to_store(vehicle)
+
+        elif choice == '7' and isinstance(user, Admin):
+            reg = input("Enter registration number to remove: ")
+            user.remove_vehicle_from_store(reg)
 
         else:
             print("Invalid option. Try again.")

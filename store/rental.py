@@ -2,6 +2,9 @@ class RentalStore:
     def __init__(self):
         self.vehicles = []
 
+    def preload_vehicle(self, vehicle):
+        self.vehicles.append(vehicle)
+
     def add_vehicle(self, vehicle):
         self.vehicles.append(vehicle)
         print(f"Added vehicle: {vehicle.display_info()}")
@@ -24,7 +27,7 @@ class RentalStore:
         if not self.vehicles:
             print("No vehicles in store.")
         else:
-            print("Available Vehicles:")
+            print("\nAvailable Vehicles:")
             for v in self.vehicles:
                 status = "Available" if v.is_available() else "Rented"
                 print(f"{v.display_info()} - {status}")
