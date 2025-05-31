@@ -69,12 +69,42 @@ def main():
 
                     user.rent_vehicle(vehicle)
                     reservation = Reservation(user, vehicle, start_date, end_date)
-                    invoice = Invoice(reservation, daily_rate=100.0)
+                    '''invoice = Invoice(reservation, daily_rate=100.0)
                     print(invoice.generate_invoice())
 
-                    method = input("Enter payment method (e.g., Credit Card): ")
+                    method = input("\nEnter payment method (e.g., Cash or Credit Card): ")
                     payment = Payment(invoice, method)
+                    payment.process_payment()'''
+
+                    daily_rate = 100.0
+                    invoice = Invoice(reservation, daily_rate=daily_rate)
+
+                    # Apply discount if RegularCustomer
+                    discount = 0
+                    if isinstance(user, RegularCustomer):
+                        use_points = input("Do you want to redeem your points for a discount? (yes/no): ").lower()
+                        if use_points == "yes" or use_points == 'y':
+                            discount = user.redeem_points()
+
+                    invoice.total_amount -= discount
+
+                    # Ensure amount isn't negative
+                    invoice.total_amount = max(invoice.total_amount, 0.0)
+
+                    print(invoice.generate_invoice())
+                    print(f"\tDiscount Applied: ${discount:.2f}")
+                    print(f"\tFinal Amount Due: ${invoice.total_amount:.2f}")
+
+                    method = input("Enter payment method (e.g.,Cash or Credit Card): ")
+                    payment = Payment(customer=user, payment_method=method, invoice=invoice)
+                    payment.discount = discount  # store it for display
                     payment.process_payment()
+                    print(payment.display())
+
+                    # Add points
+                    if isinstance(user, RegularCustomer):
+                        user.earn_points(invoice.total_amount)
+
 
                 except Exception as e:
                     print("Error processing reservation:", e)

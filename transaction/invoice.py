@@ -6,8 +6,8 @@ class Invoice:
         self.total_amount = self.daily_rate * self.total_days
 
     def generate_invoice(self):
-        return (f"INVOICE:\nCustomer: {self.reservation.customer.name}\n"
-                f"Vehicle: {self.reservation.vehicle.display_info()}\n"
-                f"Duration: {self.total_days} days\n"
-                f"Daily Rate: ${self.daily_rate:.2f}\n"
-                f"Total Amount: ${self.total_amount:.2f}")
+        return (f"\nINVOICE:\n\tCustomer: {self.reservation.customer.name}\n"
+                f"\tVehicle: {self.reservation.vehicle.display_info()}\n"
+                f"\tDuration: {self.total_days} days\n"
+                f"\tDaily Rate: ${self.daily_rate:.2f}\n"
+                f"\tTotal Amount: ${self.total_amount:.2f}")
