@@ -25,6 +25,7 @@ def print_menu_admin():
 def main():
     store = RentalStore()
     preload_vehicles(store)
+    today = datetime.date.today()
 
     print("\n\t----Welcome to CRMS----\n")
     user_type = input("Are you an Admin (A) or Regular Customer (R)? ").strip().lower()
@@ -66,6 +67,14 @@ def main():
                     end_str = input("Enter end date (YYYY-MM-DD): ")
                     start_date = datetime.datetime.strptime(start_str, "%Y-%m-%d").date()
                     end_date = datetime.datetime.strptime(end_str, "%Y-%m-%d").date()
+
+                    if start_date < today or end_date < today:
+                        print("Error: Dates must be today or in the future.")
+                        continue
+
+                    if end_date < start_date:
+                        print("Error: End date cannot be before start date.")
+                        continue
 
                     user.rent_vehicle(vehicle)
                     reservation = Reservation(user, vehicle, start_date, end_date)
